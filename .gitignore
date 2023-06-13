@@ -357,10 +357,7 @@ healthchecksdb
 MigrationBackup/
 
 #
-custom.js
-custom.js
-owl-carousel.js
-isotope.min.js
+
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
