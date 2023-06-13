@@ -7,9 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Mappings\" />
-    <Folder Include="ModelDto\" />
-    <Folder Include="UseCases\AdminCase\Queries\" />
+    <Folder Include="Application\UseCases\AdminCase\Queries\" />
     <Folder Include="Validations\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
