@@ -10,6 +10,7 @@ public static class Startup
     public static IServiceCollection AddStartup(this IServiceCollection services)
     {
         services.AddScoped<ICurrentUser,CurrentUserService>();
+        services.AddScoped<IHashStringService,HashStringService>();
         services.AddHttpContextAccessor();
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());

@@ -1,3 +1,4 @@
+using Gaming.MVC.Application.Common.CookieAuthentication;
 using Gaming.MVC.Infrastructure.DataAccsess;
 
 namespace Gaming.MVC;
@@ -14,6 +15,8 @@ public class Program
         builder.Services.AddControllersWithViews();
         builder.Services.AddDataConfiguration(builder.Configuration);
         builder.Services.AddStartup();
+        builder.Services.AddCookieAuthentication();
+        builder.Services.AddAuthorization();
         var app = builder.Build();
 
        
@@ -30,6 +33,7 @@ public class Program
 
         app.UseRouting();
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapControllerRoute(
