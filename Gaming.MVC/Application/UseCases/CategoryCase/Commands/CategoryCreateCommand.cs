@@ -1,4 +1,5 @@
 ﻿using Gaming.MVC.Application.Common.Interfaces;
+using Gaming.MVC.Domain.Models;
 using MediatR;
 
 namespace Gaming.MVC.Application.UseCases.CategoryCase.Commands;
@@ -17,8 +18,17 @@ public class CategoryCreateCommandHandler : IRequestHandler<CategoryCreateComman
         _context = context;
     }
 
-    public Task<bool> Handle(CategoryCreateCommand request, CancellationToken cancellationToken)
+    public async Task<bool> Handle(CategoryCreateCommand request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        Category category = new Category
+        {
+            CategoryImage = request.CategoryImage,
+            CategoryName = request.CategoryName
+
+        };
+        await _context.Categories.AddAsync(category,cancellationToken);
+        if ((await _context.SaveChangesAsync(cancellationToken)) > 0)
+            return true;
+        return false;
     }
 }
