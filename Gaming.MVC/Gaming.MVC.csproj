@@ -9,7 +9,7 @@
   <ItemGroup>
     <Folder Include="Application\UseCases\AdminCase\Queries\" />
     <Folder Include="Validations\" />
-    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\lib\images\" />
   </ItemGroup>
 
   <ItemGroup>
