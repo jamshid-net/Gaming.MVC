@@ -3,16 +3,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Gaming.MVC.Models;
 
-public class Cart
+public class User
 {
     [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int CartId { get; set; }
-
     public int UserId { get; set; }
-    public virtual User User { get; set; }
-    public int ProductId { get; set; }
+    public string FullName { get; set; }
+    public string UserName { get; set; } 
+    public string Email { get; set; }
+    public string Password { get; set; }
 
-    public virtual Product Product { get; set; }
-
-    public int Quantity { get; set; }
 }

@@ -1,3 +1,5 @@
+using Gaming.MVC.DataAccsess;
+
 namespace Gaming.MVC;
 
 public class Program
@@ -5,10 +7,11 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         // Add services to the container.
         builder.Services.AddControllersWithViews();
-
+        builder.Services.AddDataConfiguration(builder.Configuration);
+        builder.Services.AddStartup();
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
