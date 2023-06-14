@@ -1,5 +1,6 @@
-using Gaming.MVC.Application.Common.CookieAuthentication;
-using Gaming.MVC.Infrastructure.DataAccsess;
+using Gaming.Application;
+using Gaming.Application.Common.CookieAuthentication;
+using Gaming.Infrastructure.DataAccsess;
 
 namespace Gaming.MVC;
 
@@ -15,6 +16,7 @@ public class Program
         builder.Services.AddControllersWithViews();
         builder.Services.AddDataConfiguration(builder.Configuration);
         builder.Services.AddStartup();
+        builder.Services.AddApplication();
         builder.Services.AddCookieAuthentication();
         builder.Services.AddAuthorization();
         var app = builder.Build();
