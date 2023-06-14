@@ -1,5 +1,5 @@
-using Gaming.MVC.Application.Common.CookieAuthentication;
-using Gaming.MVC.Infrastructure.DataAccsess;
+using Gaming.Application.Common.CookieAuthentication;
+using Gaming.Infrastructure.DataAccsess;
 
 namespace Gaming.MVC;
 

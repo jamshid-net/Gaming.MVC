@@ -1,4 +1,4 @@
-﻿using Gaming.MVC.Application.UseCases.AdminCase.Commands;
+﻿using Gaming.Application.UseCases.AdminCase.Commands;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
