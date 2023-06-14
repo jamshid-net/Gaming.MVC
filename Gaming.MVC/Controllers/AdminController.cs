@@ -16,7 +16,7 @@ public class AdminController : BaseController
     [HttpPost]
     public async ValueTask<IActionResult> Login([FromForm] AdminLoginCommand command)
     {
-        var identity = await mediator.Send(command);
+        var claimsIdentity = await mediator.Send(command);
         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
         return RedirectToAction("AdminMainPage");
     }
