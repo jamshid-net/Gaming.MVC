@@ -1,4 +1,6 @@
-﻿namespace Gaming.Application.Common.ModelDto;
+﻿using Gaming.Domain.Entities;
+
+namespace Gaming.Application.Common.ModelDto;
 
 public class ProductGetDto
 {
@@ -10,4 +12,5 @@ public class ProductGetDto
     public string? ProductImage { get; set; }
 
     public int? CategoryId { get; set; }
+    public Category Category { get; set; }
 }
