@@ -285,18 +285,21 @@ Header Style
 */
 
 .background-header {
-  background-color: #0071f8 !important;
-  border-radius: 0px 0px 25px 25px;
-  height: 80px!important;
-  position: fixed!important;
-  top: 0!important;
-  left: 0;
-  right: 0;
-  box-shadow: 0px 0px 10px rgba(0,0,0,0.15)!important;
-  -webkit-transition: all .5s ease 0s;
-  -moz-transition: all .5s ease 0s;
-  -o-transition: all .5s ease 0s;
-  transition: all .5s ease 0s;
+    background: #0f0c29; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    border-radius: 0px 0px 25px 25px;
+    height: 80px !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0;
+    right: 0;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.15) !important;
+    -webkit-transition: all .5s ease 0s;
+    -moz-transition: all .5s ease 0s;
+    -o-transition: all .5s ease 0s;
+    transition: all .5s ease 0s;
 }
 
 .background-header .logo img {
@@ -823,12 +826,13 @@ Trending Style
   text-align: right;
 }
 
-.trending .item  {
-  background-color: #eeeeee;
-  position: relative;
-  overflow: hidden;
-  border-radius: 25px;
-  margin-bottom: 30px;
+.trending .item {
+    background: rgb(191,183,249);
+    background: linear-gradient(91deg, rgba(191,183,249,1) 0%, rgba(255,255,255,1) 100%);
+    position: relative;
+    overflow: hidden;
+    border-radius: 25px;
+    margin-bottom: 30px;
 }
 
 .trending .item .thumb {
@@ -907,9 +911,13 @@ Most Played Style
 */
 
 .most-played {
-  background-color: #f7f7f7;
-  padding: 100px 0px;
-  border-radius: 150px;
+    background: #ddd; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    background-color: #f7f7f7;
+    padding: 100px 0px;
+    border-radius: 150px;
 }
 
 .most-played .main-button {
@@ -917,13 +925,14 @@ Most Played Style
   text-align: right;
 }
 
-.most-played .item  {
-  background-color: #fff;
-  position: relative;
-  border-radius: 25px;
-  text-align: center;
-  margin-bottom: 40px;
-}
+    .most-played .item {
+        background: rgb(191,183,249);
+        background: linear-gradient(91deg, rgba(191,183,249,1) 0%, rgba(255,255,255,1) 100%);
+        position: relative;
+        border-radius: 25px;
+        text-align: center;
+        margin-bottom: 40px;
+    }
 
 .most-played .item .thumb {
   position: relative;
@@ -986,12 +995,13 @@ Categories Style
   margin-top: 30px;
 }
 
-.categories .item  {
-  background-color: #0071f8;
-  position: relative;
-  border-radius: 25px;
-  text-align: center;
-  margin-bottom: 30px;
+.categories .item {
+    background: rgb(191,183,249);
+    background: linear-gradient(91deg, rgba(191,183,249,1) 0%, rgba(255,255,255,1) 100%);
+    position: relative;
+    border-radius: 25px;
+    text-align: center;
+    margin-bottom: 30px;
 }
 
 .categories .item .thumb {
@@ -1033,12 +1043,13 @@ CTA Style
   z-index: -1;
 }
 
-.cta .shop {
-  margin-top: 80px;
-  background-color: #f7f7f7;
-  border-radius: 25px;
-  padding: 80px;
-}
+    .cta .shop {
+        margin-top: 80px;
+        background: rgb(191,183,249);
+        background: linear-gradient(91deg, rgba(191,183,249,1) 0%, rgba(255,255,255,1) 100%);
+        border-radius: 25px;
+        padding: 80px;
+    }
 
 .cta .shop .section-heading {
   margin-right: 30px;
@@ -1112,13 +1123,17 @@ Footer Style
 */
 
 footer {
-  margin-top: 150px;
-  background-color: #0071f8;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-image: url(../images/footer-bg.jpg);
-  min-height: 150px;
-  border-radius: 150px 150px 0px 0px;
+    background: #0f0c29; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    margin-top: 150px;
+   /* background-color: #0071f8;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url(../images/footer-bg.jpg);*/
+    min-height: 150px;
+    border-radius: 150px 150px 0px 0px;
 }
 
 footer p {
