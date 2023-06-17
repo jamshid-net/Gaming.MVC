@@ -2,6 +2,6 @@
 
 public interface ICurrentUser
 {
-    string? UserName { get; }
-    int? UserId { get; }
+     string? UserId { get; }    
+    
 }

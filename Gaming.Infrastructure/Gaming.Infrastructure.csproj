@@ -10,4 +10,8 @@
     <ProjectReference Include="..\Gaming.Application\Gaming.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="EntityConfigure\" />
+  </ItemGroup>
+
 </Project>

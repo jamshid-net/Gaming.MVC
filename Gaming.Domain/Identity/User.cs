@@ -5,6 +5,8 @@ namespace Gaming.Domain.Identity;
 
 public class User: IdentityUser
 {
-    public string FullName { get; set; }
+    public DateOnly? BirthDate { get; set; }
+    public string? ProfilePicture { get; set; }
+
 
 }

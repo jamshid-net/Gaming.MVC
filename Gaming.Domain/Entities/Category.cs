@@ -5,10 +5,9 @@ namespace Gaming.Domain.Entities;
 
 public class Category
 {
-    [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int CategoryId { get; set; }
+    public Guid Id { get; set; }
     public string CategoryName { get; set; } = null!;
     public string? CategoryImage { get; set; }
 
-    public virtual ICollection<Product> Products { get; set; }
+    public virtual ICollection<Product>? Products { get; set; }
 }

@@ -1,21 +1,21 @@
 ﻿using Gaming.Application.Common.Interfaces;
 using Gaming.Domain.Entities;
+using Gaming.Domain.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 namespace Gaming.Infrastructure.DataAccsess;
 
-public class ApplicationDbContext : DbContext, IApplicationDbContext
+public class ApplicationDbContext : IdentityDbContext<User>, IApplicationDbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
 
     }
-    public DbSet<Admin> Admins { get; set; }
-
-    public DbSet<User> Users { get; set; }
-
+    
+   
     public DbSet<Product> Products { get; set; }
 
     public DbSet<Category> Categories { get; set; }
