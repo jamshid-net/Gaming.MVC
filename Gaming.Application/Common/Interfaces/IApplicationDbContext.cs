@@ -5,9 +5,9 @@ namespace Gaming.Application.Common.Interfaces;
 
 public interface IApplicationDbContext
 {
-    public DbSet<Admin> Admins { get; }
 
-    public DbSet<User> Users { get; }
+
+  
     public DbSet<Product> Products { get; }
     public DbSet<Category> Categories { get; }
     public DbSet<Order> Orders { get; }

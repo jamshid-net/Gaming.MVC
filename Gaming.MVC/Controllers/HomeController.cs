@@ -1,9 +1,12 @@
-﻿using Gaming.MVC.Models;
+﻿using Gaming.Domain.Entities;
+using Gaming.MVC.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using X.PagedList;
 
 namespace Gaming.MVC.Controllers;
-public class HomeController : Controller
+public class HomeController : BaseController
 {
     private readonly ILogger<HomeController> _logger;
 
@@ -12,18 +15,39 @@ public class HomeController : Controller
         _logger = logger;
     }
 
-    public IActionResult Index()
+    public async ValueTask<IActionResult> Index()
     {
-        return View();
+
+        var entity = await _context.Products.ToListAsync();
+        return View(entity);
     }
 
-    public IActionResult OurShop()
+    public async Task<IActionResult> OurShop(int page =1)
     {
-        return View();
+
+        int pageSize = 10;
+
+       
+        var products = await _context.Products.ToListAsync();
+        var categories = await _context.Categories.ToListAsync();
+        var paginatedList=products.ToPagedList(page, pageSize);
+        var ProductAndCategoryViewModels = new ProductAndCategoryViewModels()
+        {
+            Products = paginatedList,
+            Categories = categories
+        };
+        return View(ProductAndCategoryViewModels);
     }
-    public IActionResult ProductDetails()
+
+    public async Task<IActionResult> ProductDetails(Guid? id)
     {
-        return View();
+        if(id == null)
+        {
+            return RedirectToAction("OurShop");
+        }
+
+        var entity =await _context.Products.FindAsync(new object[] { id });
+        return View(entity);
     }
 
     public IActionResult Contact()

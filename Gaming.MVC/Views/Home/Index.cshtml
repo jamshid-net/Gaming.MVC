@@ -1,5 +1,19 @@
-﻿@{
+﻿@model List<Gaming.Domain.Entities.Product>
+
+@{
     ViewData["Title"] = "Home Page";
+
+    var TopCategory = Model
+    .Where(x => x.CategoryId != null)
+    .GroupBy(x => x.CategoryId)
+    .Where(g => g.Count() > 2)
+    .Select(g => g.First().Category)
+    .ToList();
+
+    var bestPriceGames = Model.Where(x => x.Discount > 10);
+    var verycheap = Model.Max(x => x.Discount);
+    var banner = Model.FirstOrDefault(x => x.Discount == verycheap);
+
 }
 
 
@@ -21,9 +35,9 @@
             </div>
             <div class="col-lg-4 offset-lg-2">
                 <div class="right-image">
-                    <img src="~/lib/images/banner-image.jpg" alt="">
-                    <span class="price">$22</span>
-                    <span class="offer">-40%</span>
+                    <img src="@banner.ProductImage" alt="">
+                    <span class="price">$@(banner.Price-banner.Discount)</span>
+                    <span class="offer">-@banner.Discount$</span>
                 </div>
             </div>
         </div>
@@ -82,67 +96,38 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="section-heading">
-                    <h6>Trending</h6>
-                    <h2>Trending Games</h2>
+                    <h6>Discount</h6>
+                    <h2>Best price Games</h2>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="main-button">
-                    <a href="shop.html">View All</a>
+                    <a asp-action="OurShop" asp-controller="Home">View All</a>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="item">
-                    <div class="thumb">
-                        <a href="product-details.html"><img src="~/lib/images/trending-01.jpg" alt=""></a>
-                        <span class="price"><em>$28</em>$20</span>
-                    </div>
-                    <div class="down-content">
-                        <span class="category">Action</span>
-                        <h4>Assasin Creed</h4>
-                        <a href="product-details.html"><i class="fa fa-shopping-bag"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="item">
-                    <div class="thumb">
-                        <a href="product-details.html"><img src="~/lib/images/trending-02.jpg" alt=""></a>
-                        <span class="price">$44</span>
-                    </div>
-                    <div class="down-content">
-                        <span class="category">Action</span>
-                        <h4>Assasin Creed</h4>
-                        <a href="product-details.html"><i class="fa fa-shopping-bag"></i></a>
+            <div class="d-flex justify-content-evenly">
+
+            
+            @foreach (var game in bestPriceGames)
+            {
+                <div class="col-lg-3 col-md-6">
+                    <div class="item">
+                        <div class="thumb">
+                            <a asp-action="ProductDetails" asp-controller="Home" asp-route-id="@game.ProductId"><img width="300" height="250" src="@game.ProductImage" alt=""></a>
+                            <span class="price"><em>@if (game.Discount > 0)@("$" + game.Price)</em>$@(game.Price - game.Discount)</span>
+                        </div>
+                        <div class="down-content">
+                            <span class="category">@game.Category.CategoryName</span>
+                            <h4>@game.ProductName</h4>
+                            <a asp-action="ProductDetails" asp-controller="Home" asp-route-id="@game.ProductId"><i class="fa fa-shopping-bag"></i></a>
+                        </div>
                     </div>
                 </div>
+
+            }
             </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="item">
-                    <div class="thumb">
-                        <a href="product-details.html"><img src="~/lib/images/trending-03.jpg" alt=""></a>
-                        <span class="price"><em>$64</em>$44</span>
-                    </div>
-                    <div class="down-content">
-                        <span class="category">Action</span>
-                        <h4>Assasin Creed</h4>
-                        <a href="product-details.html"><i class="fa fa-shopping-bag"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="item">
-                    <div class="thumb">
-                        <a href="product-details.html"><img src="~/lib/images/trending-04.jpg" alt=""></a>
-                        <span class="price">$32</span>
-                    </div>
-                    <div class="down-content">
-                        <span class="category">Action</span>
-                        <h4>Assasin Creed</h4>
-                        <a href="product-details.html"><i class="fa fa-shopping-bag"></i></a>
-                    </div>
-                </div>
-            </div>
+            
+            
         </div>
     </div>
 </div>
@@ -158,81 +143,26 @@
             </div>
             <div class="col-lg-6">
                 <div class="main-button">
-                    <a href="shop.html">View All</a>
+                    <a asp-action="OurShop" asp-controller="Home">View All</a>
                 </div>
             </div>
-            <div class="col-lg-2 col-md-6 col-sm-6">
-                <div class="item">
-                    <div class="thumb">
-                        <a href="product-details.html"><img src="~/lib/images/top-game-01.jpg" alt=""></a>
-                    </div>
-                    <div class="down-content">
-                        <span class="category">Adventure</span>
-                        <h4>Assasin Creed</h4>
-                        <a href="product-details.html">Explore</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-6 col-sm-6">
-                <div class="item">
-                    <div class="thumb">
-                        <a href="product-details.html"><img src="~/lib/images/top-game-02.jpg" alt=""></a>
-                    </div>
-                    <div class="down-content">
-                        <span class="category">Adventure</span>
-                        <h4>Assasin Creed</h4>
-                        <a href="product-details.html">Explore</a>
+            @foreach (var game in Model.Take(6))
+            {
+                <div class="col-lg-2 col-md-6 col-sm-6">
+                    <div class="item">
+                        <div class="thumb">
+                            <a asp-action="ProductDetails" asp-controller="Home" asp-route-id="@game.ProductId"><img width="150" height="140" src="@game.ProductImage" alt=""></a>
+                        </div>
+                        <div class="down-content">
+                            <span class="category">@game.Category.CategoryName</span>
+                            <h4>@game.ProductName</h4>
+                            <a asp-action="ProductDetails" asp-controller="Home" asp-route-id="@game.ProductId">Explore</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-2 col-md-6 col-sm-6">
-                <div class="item">
-                    <div class="thumb">
-                        <a href="product-details.html"><img src="~/lib/images/top-game-03.jpg" alt=""></a>
-                    </div>
-                    <div class="down-content">
-                        <span class="category">Adventure</span>
-                        <h4>Assasin Creed</h4>
-                        <a href="product-details.html">Explore</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-6 col-sm-6">
-                <div class="item">
-                    <div class="thumb">
-                        <a href="product-details.html"><img src="~/lib/images/top-game-04.jpg" alt=""></a>
-                    </div>
-                    <div class="down-content">
-                        <span class="category">Adventure</span>
-                        <h4>Assasin Creed</h4>
-                        <a href="product-details.html">Explore</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-6 col-sm-6">
-                <div class="item">
-                    <div class="thumb">
-                        <a href="product-details.html"><img src="~/lib/images/top-game-05.jpg" alt=""></a>
-                    </div>
-                    <div class="down-content">
-                        <span class="category">Adventure</span>
-                        <h4>Assasin Creed</h4>
-                        <a href="product-details.html">Explore</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-6 col-sm-6">
-                <div class="item">
-                    <div class="thumb">
-                        <a href="product-details.html"><img src="~/lib/images/top-game-06.jpg" alt=""></a>
-                    </div>
-                    <div class="down-content">
-                        <span class="category">Adventure</span>
-                        <h4>Assasin Creed</h4>
-                        <a href="product-details.html">Explore</a>
-                    </div>
-                </div>
-            </div>
+            }
+            
+            
         </div>
     </div>
 </div>
@@ -246,46 +176,19 @@
                     <h2>Top Categories</h2>
                 </div>
             </div>
-            <div class="col-lg col-sm-6 col-xs-12">
-                <div class="item">
-                    <h4>Action</h4>
-                    <div class="thumb">
-                        <a href="product-details.html"><img src="~/lib/images/categories-01.jpg" alt=""></a>
+            @foreach (var item in TopCategory)
+            {
+                <div class="col-lg col-sm-6 col-xs-12">
+                    <div class="item">
+                        <h4>@item.CategoryName</h4>
+                        <div class="thumb">
+                            <a asp-action="ProductDetails" asp-controller="Home"><img src="@item.CategoryImage" alt=""></a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg col-sm-6 col-xs-12">
-                <div class="item">
-                    <h4>Action</h4>
-                    <div class="thumb">
-                        <a href="product-details.html"><img src="~/lib/images/categories-05.jpg" alt=""></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg col-sm-6 col-xs-12">
-                <div class="item">
-                    <h4>Action</h4>
-                    <div class="thumb">
-                        <a href="product-details.html"><img src="~/lib/images/categories-03.jpg" alt=""></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg col-sm-6 col-xs-12">
-                <div class="item">
-                    <h4>Action</h4>
-                    <div class="thumb">
-                        <a href="product-details.html"><img src="~/lib/images/categories-04.jpg" alt=""></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg col-sm-6 col-xs-12">
-                <div class="item">
-                    <h4>Action</h4>
-                    <div class="thumb">
-                        <a href="product-details.html"><img src="~/lib/images/categories-05.jpg" alt=""></a>
-                    </div>
-                </div>
-            </div>
+            }
+            
+            
         </div>
     </div>
 </div>

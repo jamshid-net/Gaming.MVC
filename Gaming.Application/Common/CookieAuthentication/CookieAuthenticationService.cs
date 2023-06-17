@@ -7,14 +7,16 @@ public static class CookieAuthenticationService
 {
     public static IServiceCollection AddCookieAuthentication(this IServiceCollection services)
     {
-        services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            .AddCookie(options =>
-            {
-                options.LoginPath = "/";
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
-                options.Cookie.MaxAge = options.ExpireTimeSpan;
-                options.SlidingExpiration = true;
-            });
+        services.ConfigureApplicationCookie(options =>
+        {
+            options.Cookie.HttpOnly = true;
+            options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+
+            options.LoginPath = "/Identity/Account/Login";
+            options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+            options.SlidingExpiration = true;
+
+        });
 
         return services;
     }

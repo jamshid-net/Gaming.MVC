@@ -10,9 +10,9 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-       
 
 
+        builder.Services.AddRazorPages();
         builder.Services.AddControllersWithViews();
         builder.Services.AddDataConfiguration(builder.Configuration);
         builder.Services.AddStartup();
@@ -20,8 +20,8 @@ public class Program
         builder.Services.AddCookieAuthentication();
         builder.Services.AddAuthorization();
         var app = builder.Build();
+        
 
-       
 
         if (!app.Environment.IsDevelopment())
         {
@@ -29,7 +29,7 @@ public class Program
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
         }
-
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         app.UseHttpsRedirection();
         app.UseStaticFiles();
 
@@ -37,7 +37,7 @@ public class Program
 
         app.UseAuthentication();
         app.UseAuthorization();
-
+        app.MapRazorPages();
         app.MapControllerRoute(
             name: "default",
             pattern: "{controller=Home}/{action=Index}/{id?}");
