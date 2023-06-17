@@ -77,6 +77,7 @@ header, nav, section, article, aside, footer, hgroup {
 }
 
 html, body {
+    background-color:rgb(221, 229, 238, 0,84);
   font-family: 'Poppins', sans-serif;
   -ms-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
@@ -88,7 +89,7 @@ a {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: #1e1e1e;
+  color: #ee626b;
   margin-top: 0px;
   margin-bottom: 0px;
   font-weight: 700;
@@ -784,13 +785,14 @@ Services Style
   margin-top: -80px;
 }
 
-.features .item {
-  padding: 35px;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
-  border-radius: 25px;
-  background-color: #fff;
-  text-align: center;
-}
+    .features .item {
+        padding: 35px;
+        box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
+        border-radius: 25px;
+        background-color: #fff;
+        background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
+        text-align: center;
+    }
 
 .features .item h4 {
   font-size: 17px;
@@ -828,7 +830,7 @@ Trending Style
 
 .trending .item {
     background: rgb(191,183,249);
-    background: linear-gradient(91deg, rgba(191,183,249,1) 0%, rgba(255,255,255,1) 100%);
+    background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
     position: relative;
     overflow: hidden;
     border-radius: 25px;
@@ -927,7 +929,7 @@ Most Played Style
 
     .most-played .item {
         background: rgb(191,183,249);
-        background: linear-gradient(91deg, rgba(191,183,249,1) 0%, rgba(255,255,255,1) 100%);
+        background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
         position: relative;
         border-radius: 25px;
         text-align: center;
@@ -997,7 +999,7 @@ Categories Style
 
 .categories .item {
     background: rgb(191,183,249);
-    background: linear-gradient(91deg, rgba(191,183,249,1) 0%, rgba(255,255,255,1) 100%);
+    background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
     position: relative;
     border-radius: 25px;
     text-align: center;
@@ -1046,7 +1048,7 @@ CTA Style
     .cta .shop {
         margin-top: 80px;
         background: rgb(191,183,249);
-        background: linear-gradient(91deg, rgba(191,183,249,1) 0%, rgba(255,255,255,1) 100%);
+        background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
         border-radius: 25px;
         padding: 80px;
     }
@@ -1059,17 +1061,19 @@ CTA Style
 .cta .shop p {
   font-weight: 600;
   font-size: 16px;
+  color:palegoldenrod;
 }
 
 .cta .shop .main-button {
   margin-top: 50px;
 }
 
-.cta .subscribe {
-  background-color: #f7f7f7;
-  border-radius: 25px;
-  padding: 80px 60px;
-}
+    .cta .subscribe {
+        background: #f7f7f7;
+        background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
+        border-radius: 25px;
+        padding: 80px 60px;
+    }
 
 .cta .subscribe .section-heading {
   margin-bottom: 50px;
@@ -1163,7 +1167,7 @@ Page Header Style
 */
 
 .page-heading {
-  background-image: url(../images/page-heading-bg.jpg);
+  background-image: url(../images/banner-bg.jpg);
   border-radius: 0px 0px 150px 150px;
   background-position: center bottom;
   background-repeat: no-repeat;
