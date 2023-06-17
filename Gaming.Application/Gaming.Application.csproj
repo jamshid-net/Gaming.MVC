@@ -12,6 +12,8 @@
 		<PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
 		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.2" />
 		<PackageReference Include="MediatR" Version="12.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.7" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.7" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.5" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.5">
 			<PrivateAssets>all</PrivateAssets>
@@ -22,10 +24,6 @@
 	</ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Gaming.Domain\Gaming.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="UseCases\AdminCase\Queries\" />
   </ItemGroup>
 
 </Project>

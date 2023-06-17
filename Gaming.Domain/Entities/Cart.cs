@@ -1,16 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Gaming.Domain.Identity;
 
 namespace Gaming.Domain.Entities;
 
 public class Cart
 {
-    [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int CartId { get; set; }
+    public Guid CartId { get; set; }
 
-    public int UserId { get; set; }
+    public string UserId { get; set; }
     public virtual User User { get; set; }
-    public int ProductId { get; set; }
+    public Guid ProductId { get; set; }
 
     public virtual Product Product { get; set; }
 
