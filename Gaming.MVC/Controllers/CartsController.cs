@@ -1,18 +1,24 @@
-﻿using Gaming.Domain.Entities;
+﻿using Gaming.Application.Common.Interfaces;
+using Gaming.Domain.Entities;
 using Gaming.Infrastructure.DataAccsess;
+using Gaming.MVC.Controllers;
+using Gaming.MVC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace UserIdentitySolution.Controllers
 {
+    [Authorize]
     public class CartsController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public CartsController(ApplicationDbContext context)
+        private readonly ICurrentUser _currentUser;
+        public CartsController(ApplicationDbContext context, ICurrentUser currentUser)
         {
             _context = context;
+            _currentUser = currentUser;
         }
 
         // GET: Carts
@@ -57,6 +63,8 @@ namespace UserIdentitySolution.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CartId,UserId,ProductId,Quantity")] Cart cart)
         {
+         
+
             if (ModelState.IsValid)
             {
                 cart.CartId = Guid.NewGuid();
@@ -68,6 +76,31 @@ namespace UserIdentitySolution.Controllers
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", cart.UserId);
             return View(cart);
         }
+
+        [HttpPost] 
+        public async Task<IActionResult> CreateCart(Guid productId, int quantity)
+        {
+            var currentUserId = _currentUser.UserId;
+            if(currentUserId is null) { return NotFound(); }
+            if (ModelState.IsValid)
+            {
+                Cart cart = new Cart
+                {
+                    ProductId =productId,
+                    Quantity = quantity,
+                    UserId = currentUserId,
+                    CartId = Guid.NewGuid()
+                };
+                await _context.Carts.AddAsync(cart);
+                await _context.SaveChangesAsync();
+
+                return Ok();
+                
+            }
+            return NoContent();
+        }
+
+
 
         // GET: Carts/Edit/5
         public async Task<IActionResult> Edit(Guid? id)

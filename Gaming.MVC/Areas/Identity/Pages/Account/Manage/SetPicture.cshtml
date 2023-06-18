@@ -1,0 +1,17 @@
+﻿@page
+@model Gaming.MVC.Areas.Identity.Pages.Account.Manage.SetPictureModel
+@{
+}
+<h1>Set your profile picture!</h1>
+<form method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+    <div class="form-group">
+
+        <label asp-for="Input.ProfileImage" class="control-label"></label>
+        <input type="file" asp-for="Input.ProfileImage" class="form-control" />
+        <span asp-validation-for="Input.ProfileImage" class="text-danger"></span>
+        <div class="form-group">
+            <input type="submit" value="Upload" class="btn btn-success mt-2" />
+        </div>
+    </div>
+</form>
