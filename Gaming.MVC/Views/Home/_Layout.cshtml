@@ -1,5 +1,4 @@
-﻿﻿
-<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -32,8 +31,15 @@
 </head>
 
 <body>
-
-
+    @using Gaming.Application.Common.Interfaces;
+    @using Gaming.Domain.Identity;
+    @using Microsoft.AspNetCore.Identity;
+    @inject ICurrentUser _currentUser
+    @inject UserManager<User> _usermanager
+    @{
+        var CurrentUser =await _usermanager.FindByIdAsync(_currentUser.UserId);
+    }
+   
     <!-- ***** Header Area Start ***** -->
     <header class="header-area header-sticky">
         <div class="container">
@@ -51,7 +57,29 @@
                             <li><a asp-action="OurShop" asp-controller="Home">Our Shop</a></li>
                             
                             <li><a asp-action="Contact" asp-controller="Home">Contact Us</a></li>
-                            <li><a href="#">Sign In</a></li>
+                            @{
+
+                                if (_currentUser.UserId == null)
+                                {
+                                    <li><a asp-area="Identity" asp-page="/Account/Login">Sign In</a></li>
+
+                                }
+                                else
+                                {
+
+                                    <li>
+                                        <a asp-area="Identity" asp-page="/Account/Manage/Index" class=" d-flex justify-content-evenly">
+                                            My profile
+                                            <img class="styleofProfilePicture" src="@CurrentUser.ProfilePicture" />
+                                        </a>
+                                    </li>
+                                    <li><a asp-area="Identity" asp-page="/Account/Logout">Logout</a></li>
+                                   
+                                   
+                                }
+        
+                            }
+                             
                         </ul>
                         <a class='menu-trigger'>
                             <span>Menu</span>
@@ -76,7 +104,25 @@
     <!-- Bootstrap core JavaScript -->
 
 
+    <style>
+        .styleofProfilePicture {
+            margin-left:5px;
+            border:2px solid #fff;
+            border-radius: 50%;
+            width:45px;
+            height:40px;
+            cursor:pointer;
+            
+            
+        }
 
+        .styleofProfilePicture:hover{
+            opacity:0.5;
+           
+        }
+        
+    </style>
+    
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/isotope.min.js"></script>

@@ -13,4 +13,6 @@ public class CurrentUserService:ICurrentUser
     }
 
     public string? UserId => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+
+    public string? UserProfilePicture => _httpContextAccessor.HttpContext?.User?.FindFirstValue("ProfilePicture");
 }

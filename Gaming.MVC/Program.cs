@@ -1,12 +1,13 @@
 using Gaming.Application;
 using Gaming.Application.Common.CookieAuthentication;
 using Gaming.Infrastructure.DataAccsess;
+using Microsoft.AspNetCore.Identity;
 
 namespace Gaming.MVC;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
@@ -41,6 +42,18 @@ public class Program
         app.MapControllerRoute(
             name: "default",
             pattern: "{controller=Home}/{action=Index}/{id?}");
+
+        using (var scope = app.Services.CreateScope())
+        {
+            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            var roles = new[] { "admin", "user", "employee" };
+            foreach (var item in roles)
+            {
+                if (!(await roleManager.RoleExistsAsync(item)))
+                    await roleManager.CreateAsync(new IdentityRole(item));
+            }
+        }
 
         app.Run();
     }
