@@ -14,4 +14,7 @@ public class BaseController : Controller
     protected IWebHostEnvironment _webHostEnvironment 
         => HttpContext.RequestServices.GetRequiredService<IWebHostEnvironment>();
 
+    protected ICurrentUser _currentUser 
+        => HttpContext.RequestServices.GetRequiredService<ICurrentUser>();
+
 }

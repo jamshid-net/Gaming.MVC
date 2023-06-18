@@ -5,11 +5,11 @@ VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaming.MVC", "Gaming.MVC\Gaming.MVC.csproj", "{66F466DD-259E-4C66-9FC3-1384DFD2D676}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gaming.Domain", "Gaming.Domain\Gaming.Domain.csproj", "{43F4C8DB-2C40-46BE-AADC-B1F960442D14}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaming.Domain", "Gaming.Domain\Gaming.Domain.csproj", "{43F4C8DB-2C40-46BE-AADC-B1F960442D14}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gaming.Application", "Gaming.Application\Gaming.Application.csproj", "{8D67815B-4D01-455D-B2DC-B9661482A173}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaming.Application", "Gaming.Application\Gaming.Application.csproj", "{8D67815B-4D01-455D-B2DC-B9661482A173}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gaming.Infrastructure", "Gaming.Infrastructure\Gaming.Infrastructure.csproj", "{25751D39-78E8-4A96-8E38-673F4EE0BA77}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaming.Infrastructure", "Gaming.Infrastructure\Gaming.Infrastructure.csproj", "{25751D39-78E8-4A96-8E38-673F4EE0BA77}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BD72FD18-8557-43DB-9B5D-2E14586CFD69}"
 EndProject

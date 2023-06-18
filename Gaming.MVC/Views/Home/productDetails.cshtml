@@ -1,5 +1,6 @@
 ﻿@model Gaming.Domain.Entities.Product;
 @{
+   
 }
 
 <div class="page-heading header-text">
@@ -26,10 +27,13 @@
                 <h4>@Model.ProductName</h4>
                 <span class="price"><em>@if (Model.Discount > 0)@("$" + Model.Price)</em>$@(Model.Price - Model.Discount)</span>
                 <p>LUGX Gaming Template is based on the latest Bootstrap 5 CSS framework. This template is provided by TemplateMo and it is suitable for your gaming shop ecommerce websites. Feel free to use this for any purpose. Thank you.</p>
-                <form id="qty" action="#">
-                    <input type="qty" class="form-control" id="1" aria-describedby="quantity" placeholder="1">
+               
+                <form asp-action="CreateCart" asp-controller="Carts" method="post" >
+                    <input type="hidden" name="productId" value="@Model.ProductId" />
+                    <input type="number" class="form-control" name="quantity" value="1" placeholder="1">
                     <button type="submit"><i class="fa fa-shopping-bag"></i> ADD TO CART</button>
                 </form>
+               
                 <ul>
                     <li><span>Game ID:</span> @Model.ProductId</li>
                     <li><span>Genre:</span> <a href="#">@Model.Category.CategoryName</a>, <a href="#">Team</a>, <a href="#">Single</a></li>
