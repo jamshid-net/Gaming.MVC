@@ -20,6 +20,10 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Gaming.Domain.Identity;
 using System.Security.Claims;
+using MailKit.Net.Smtp;
+using MailKit;
+using MimeKit;
+using System.Net.Mail;
 
 namespace Gaming.MVC.Areas.Identity.Pages.Account
 {
@@ -139,7 +143,7 @@ namespace Gaming.MVC.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                    await SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
@@ -162,6 +166,39 @@ namespace Gaming.MVC.Areas.Identity.Pages.Account
 
             // If we got this far, something failed, redisplay form
             return Page();
+        }
+
+        private async Task<bool> SendEmailAsync(string email,string subject,string confirmLink)
+        {
+            try
+            {
+                
+
+                
+                var message = new MimeMessage();
+                message.From.Add(new MailboxAddress("TEST", "thad.harris@ethereal.email"));
+                message.To.Add(new MailboxAddress("AHAHAHA", email));
+                message.Subject = subject;
+
+                message.Body = new TextPart("plain")
+                {
+                    Text = confirmLink
+                };
+
+                using var smtp = new MailKit.Net.Smtp.SmtpClient();
+                await smtp.ConnectAsync("smtp.ethereal.email", 587, MailKit.Security.SecureSocketOptions.StartTls);
+                await smtp.AuthenticateAsync("thad.harris@ethereal.email", "gBbR7uwk6vUKxuFN5m");
+                await smtp.SendAsync(message);
+                await smtp.DisconnectAsync(true);
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            
+            
         }
 
         private User CreateUser()
