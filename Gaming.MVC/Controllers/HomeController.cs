@@ -1,6 +1,7 @@
 ﻿using Gaming.Domain.Entities;
 using Gaming.MVC.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using X.PagedList;
@@ -22,6 +23,7 @@ public class HomeController : BaseController
         return View(entity);
     }
 
+    [EnableRateLimiting("SlidingLimiter")]
     public async Task<IActionResult> OurShop(int page =1)
     {
 
@@ -38,7 +40,6 @@ public class HomeController : BaseController
         };
         return View(ProductAndCategoryViewModels);
     }
-
     public async Task<IActionResult> ProductDetails(Guid? id)
     {
         if(id == null)

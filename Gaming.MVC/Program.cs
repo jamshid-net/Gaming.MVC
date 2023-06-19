@@ -1,6 +1,7 @@
 using Gaming.Application;
 using Gaming.Application.Common.CookieAuthentication;
 using Gaming.Infrastructure.DataAccsess;
+using Gaming.MVC.RateLimiterService;
 using Microsoft.AspNetCore.Identity;
 
 namespace Gaming.MVC;
@@ -20,8 +21,11 @@ public class Program
         builder.Services.AddApplication();
         builder.Services.AddCookieAuthentication();
         builder.Services.AddAuthorization();
+        builder.Services.AddLazyCache();
+        builder.Services.AddRatelimiterParams();
+
         var app = builder.Build();
-        
+       // app.UseExceptionHandler();
 
 
         if (!app.Environment.IsDevelopment())
@@ -33,9 +37,9 @@ public class Program
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         app.UseHttpsRedirection();
         app.UseStaticFiles();
-
+        
         app.UseRouting();
-
+        app.UseRateLimiter();
         app.UseAuthentication();
         app.UseAuthorization();
         app.MapRazorPages();
