@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Gaming.Domain.Identity;
+using System.Security.Claims;
 
 namespace Gaming.MVC.Areas.Identity.Pages.Account
 {
@@ -120,6 +121,7 @@ namespace Gaming.MVC.Areas.Identity.Pages.Account
                 
 
                 await _userManager.AddToRoleAsync(user, "user");
+                //await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim(ClaimTypes.Role, "Getall"));
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
