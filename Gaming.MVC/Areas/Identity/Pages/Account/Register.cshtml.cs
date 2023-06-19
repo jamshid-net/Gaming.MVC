@@ -98,6 +98,9 @@ namespace Gaming.MVC.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            
+            public string UserName { get; set; }
         }
 
 
@@ -114,7 +117,7 @@ namespace Gaming.MVC.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
-
+                
 
                 await _userManager.AddToRoleAsync(user, "user");
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);

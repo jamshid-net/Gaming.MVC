@@ -3,6 +3,7 @@ using Gaming.Domain.Entities;
 using Gaming.Infrastructure.DataAccsess;
 using Gaming.MVC.Attributes;
 using Gaming.MVC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Gaming.MVC.Controllers
 {
+
+    [Authorize(Roles ="admin")]
     public class ProductsController : BaseController
     {
 
