@@ -6,6 +6,7 @@ using Gaming.MVC.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 
 namespace UserIdentitySolution.Controllers
@@ -22,6 +23,8 @@ namespace UserIdentitySolution.Controllers
         }
 
         // GET: Carts
+
+        [EnableRateLimiting("FixedLimiter")]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Carts.Include(c => c.Product).Include(c => c.User);
@@ -77,7 +80,7 @@ namespace UserIdentitySolution.Controllers
             return View(cart);
         }
 
-        [HttpPost] 
+        
         public async Task<IActionResult> CreateCart(Guid productId, int quantity)
         {
             var currentUserId = _currentUser.UserId;
@@ -94,7 +97,7 @@ namespace UserIdentitySolution.Controllers
                 await _context.Carts.AddAsync(cart);
                 await _context.SaveChangesAsync();
 
-                return Ok();
+                return RedirectToAction("OurShop","Home");
                 
             }
             return NoContent();

@@ -19,6 +19,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Gaming.Domain.Identity;
+using System.Security.Claims;
+using MailKit.Net.Smtp;
+using MailKit;
+using MimeKit;
+using System.Net.Mail;
 
 namespace Gaming.MVC.Areas.Identity.Pages.Account
 {
@@ -75,7 +80,7 @@ namespace Gaming.MVC.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
+            [Required (ErrorMessage ="EMAILNI KIRITING")]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
@@ -84,7 +89,7 @@ namespace Gaming.MVC.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
+            [Required (ErrorMessage ="ENTERRR PASSWORD")]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
@@ -98,6 +103,9 @@ namespace Gaming.MVC.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            
+            public string UserName { get; set; }
         }
 
 
@@ -114,9 +122,10 @@ namespace Gaming.MVC.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
-
+                
 
                 await _userManager.AddToRoleAsync(user, "user");
+                //await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim(ClaimTypes.Role, "Getall"));
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
@@ -134,7 +143,7 @@ namespace Gaming.MVC.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                    await SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
@@ -157,6 +166,39 @@ namespace Gaming.MVC.Areas.Identity.Pages.Account
 
             // If we got this far, something failed, redisplay form
             return Page();
+        }
+
+        private async Task<bool> SendEmailAsync(string email,string subject,string confirmLink)
+        {
+            try
+            {
+                
+
+                
+                var message = new MimeMessage();
+                message.From.Add(new MailboxAddress("TEST", "thad.harris@ethereal.email"));
+                message.To.Add(new MailboxAddress("AHAHAHA", email));
+                message.Subject = subject;
+
+                message.Body = new TextPart("plain")
+                {
+                    Text = confirmLink
+                };
+
+                using var smtp = new MailKit.Net.Smtp.SmtpClient();
+                await smtp.ConnectAsync("smtp.ethereal.email", 587, MailKit.Security.SecureSocketOptions.StartTls);
+                await smtp.AuthenticateAsync("thad.harris@ethereal.email", "gBbR7uwk6vUKxuFN5m");
+                await smtp.SendAsync(message);
+                await smtp.DisconnectAsync(true);
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            
+            
         }
 
         private User CreateUser()

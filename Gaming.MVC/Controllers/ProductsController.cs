@@ -1,20 +1,26 @@
 ﻿using Gaming.Application.Common.Exceptions;
 using Gaming.Domain.Entities;
 using Gaming.Infrastructure.DataAccsess;
+using Gaming.MVC.Attributes;
 using Gaming.MVC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 
 
 namespace Gaming.MVC.Controllers
 {
+
+    [Authorize(Roles ="admin")]
     public class ProductsController : BaseController
     {
-       
-        
 
+
+        [EnableRateLimiting("TokenBucketLimiter")]
+        [AddLazyCache]
         // GET: Products
         public async Task<IActionResult> Index()
         {
@@ -23,6 +29,7 @@ namespace Gaming.MVC.Controllers
         }
 
         // GET: Products/Details/5
+        [EnableRateLimiting("ConcurrencyLimiter")]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null || _context.Products == null)
@@ -42,6 +49,7 @@ namespace Gaming.MVC.Controllers
         }
 
         // GET: Products/Create
+        [RemoveLazyCache]
         public IActionResult Create()
         {
             ViewData["CategoryName"] = new SelectList(_context.Categories, "CategoryName", "CategoryName");
