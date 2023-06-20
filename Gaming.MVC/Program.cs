@@ -2,7 +2,9 @@ using Gaming.Application;
 using Gaming.Application.Common.CookieAuthentication;
 using Gaming.Infrastructure.DataAccsess;
 using Gaming.MVC.RateLimiterService;
+using Gaming.MVC.Services;
 using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json;
 
 
 namespace Gaming.MVC;
@@ -16,7 +18,7 @@ public class Program
 
 
         builder.Services.AddRazorPages();
-        builder.Services.AddControllersWithViews();
+        builder.Services.AddControllersWithViews().AddNewtonsoftJson();
         builder.Services.AddDataConfiguration(builder.Configuration);
         builder.Services.AddStartup();
         builder.Services.AddApplication();
@@ -24,7 +26,9 @@ public class Program
         builder.Services.AddAuthorization();
         builder.Services.AddLazyCache();
         builder.Services.AddRatelimiterParams();
-
+        builder.Services.AddSingleton<TelegramBotService>();
+       
+        
         var app = builder.Build();
        // app.UseExceptionHandler();
 
@@ -43,6 +47,7 @@ public class Program
         app.UseRateLimiter();
         app.UseAuthentication();
         app.UseAuthorization();
+        app.MapControllers();
         app.MapRazorPages();
         app.MapControllerRoute(
             name: "default",

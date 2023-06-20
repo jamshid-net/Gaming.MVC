@@ -59,7 +59,7 @@
                             <li><a asp-action="Contact" asp-controller="Home">Contact Us</a></li>
                             @{
 
-                                if (_currentUser.UserId == null)
+                                if (!User.Identity?.IsAuthenticated??false || CurrentUser?.Id == null)
                                 {
                                     <li><a asp-area="Identity" asp-page="/Account/Login">Sign In</a></li>
 
@@ -70,7 +70,7 @@
                                     <li>
                                         <a asp-area="Identity" asp-page="/Account/Manage/Index" class=" d-flex justify-content-evenly">
                                             My profile
-                                            <img class="styleofProfilePicture" src="@CurrentUser.ProfilePicture" />
+                                            <img class="styleofProfilePicture" src="@CurrentUser?.ProfilePicture" />
                                         </a>
                                     </li>
                                     <li><a asp-area="Identity" asp-page="/Account/Logout">Logout</a></li>
