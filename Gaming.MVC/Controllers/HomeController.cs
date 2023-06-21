@@ -1,5 +1,6 @@
 ﻿using Gaming.Domain.Entities;
 using Gaming.MVC.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,8 @@ public class HomeController : BaseController
         _logger = logger;
     }
 
+    [EnableCors(PolicyName = "pdpmetan")]
+    
     public async ValueTask<IActionResult> Index()
     {
 

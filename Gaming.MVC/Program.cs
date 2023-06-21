@@ -3,18 +3,56 @@ using Gaming.Application.Common.CookieAuthentication;
 using Gaming.Infrastructure.DataAccsess;
 using Gaming.MVC.RateLimiterService;
 using Gaming.MVC.Services;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Identity;
-using Newtonsoft.Json;
-
+using System.Data;
 
 namespace Gaming.MVC;
 
 public class Program
 {
+
+
+
     public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
+
+
+        CorsPolicy metanit = new CorsPolicy()
+        {
+            Headers = { "metan", "propan", "butan" },
+            Origins = { "https://metanit.com" },
+
+        };
+        CorsPolicy pdp = new CorsPolicy()
+        {
+            Headers = { "pdp", "unicorn", "bootcamp" },
+            Origins = { "https://online.pdp.uz" },
+
+        };
+
+         
+        
+
+        builder.Services.AddCors(setup =>
+        {
+            setup.AddPolicy("pdpmetan", pdp); 
+            setup.AddPolicy("pdpmetan", metanit);
+           
+        });
+
+
+        //builderPolicy.AddPolicy("pdpmetan", (builder) =>
+        //{
+        //    builder.WithOrigins("https://online.pdp.uz")
+        //    .WithHeaders("myPdpHeader", "hello");
+
+        //    //builder.WithOrigins("https://metanit.com")
+        //    //.WithHeaders("metan", "salom");
+        //});
 
 
         builder.Services.AddRazorPages();
@@ -27,10 +65,10 @@ public class Program
         builder.Services.AddLazyCache();
         builder.Services.AddRatelimiterParams();
         builder.Services.AddSingleton<TelegramBotService>();
-       
-        
+
+
         var app = builder.Build();
-       // app.UseExceptionHandler();
+        // app.UseExceptionHandler();
 
 
         if (!app.Environment.IsDevelopment())
@@ -42,8 +80,25 @@ public class Program
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         app.UseHttpsRedirection();
         app.UseStaticFiles();
-        
+
         app.UseRouting();
+
+        //app.UseCors("pdpPolicy");
+        //app.UseCors("metanit");
+
+
+        app.UseCors("pdpmetan");
+
+
+        //app.UseCors(builder => builder
+        //.WithOrigins("https://online.pdp.uz", "https://metanit.com")
+        //.WithHeaders("mycustom")
+
+        //);
+
+
+
+
         app.UseRateLimiter();
         app.UseAuthentication();
         app.UseAuthorization();
