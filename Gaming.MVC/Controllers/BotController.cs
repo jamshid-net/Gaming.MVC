@@ -46,5 +46,10 @@ public class BotController : Controller
        
     }
 
+    //[HttpPost("/api/bot")]
+    //public Task<IActionResult> TelegramUpdate(Update update)
+    //{
+        
+    //}
   
 }

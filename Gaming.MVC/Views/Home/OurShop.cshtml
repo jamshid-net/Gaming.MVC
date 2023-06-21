@@ -39,7 +39,7 @@
                 <div class="col-lg-3 col-md-6 align-self-center mb-30 trending-items col-md-6 @game.Category.CategoryName">
                     <div class="item">
                         <div class="thumb">
-                            <a asp-action="ProductDetails" asp-controller="Home" asp-route-id="@game.ProductId"><img src="@game.ProductImage" alt=""></a>
+                            <a asp-action="ProductDetails" asp-controller="Home" asp-route-id="@game.ProductId"><img src="@game.ProductImage" asp-append-version="true" alt=""></a>
                             <span class="price"><em>@if(game.Discount>0)@("$"+game.Price)</em>$@(game.Price-game.Discount)</span>
                         </div>
                         <div class="down-content">
