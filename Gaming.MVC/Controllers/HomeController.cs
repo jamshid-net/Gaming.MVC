@@ -1,5 +1,6 @@
 ﻿using Gaming.Domain.Entities;
 using Gaming.MVC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
@@ -8,6 +9,7 @@ using System.Diagnostics;
 using X.PagedList;
 
 namespace Gaming.MVC.Controllers;
+[Authorize]
 public class HomeController : BaseController
 {
     private readonly ILogger<HomeController> _logger;

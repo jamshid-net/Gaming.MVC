@@ -21,16 +21,12 @@ public class Program
 
 
 
-        CorsPolicy metanit = new CorsPolicy()
-        {
-            Headers = { "metan", "propan", "butan" },
-            Origins = { "https://metanit.com" },
-
-        };
         CorsPolicy pdp = new CorsPolicy()
         {
             Headers = { "pdp", "unicorn", "bootcamp" },
             Origins = { "https://online.pdp.uz" },
+            Methods = {"GET","DELETE"}
+
 
         };
 
@@ -39,20 +35,22 @@ public class Program
 
         builder.Services.AddCors(setup =>
         {
-            setup.AddPolicy("pdpmetan", pdp); 
-            setup.AddPolicy("pdpmetan", metanit);
+            setup.AddPolicy("pdp", pdp); 
+
            
         });
+        
 
-
-        //builderPolicy.AddPolicy("pdpmetan", (builder) =>
+        //builder.Services.AddCors(builderPolicy =>
         //{
-        //    builder.WithOrigins("https://online.pdp.uz")
-        //    .WithHeaders("myPdpHeader", "hello");
+        //    builderPolicy.AddPolicy("metan", builder =>
+        //    {
+        //        builder.WithOrigins("https://metanit.com")
+        //        .WithHeaders("metan", "salom");
+        //    });
 
-        //    //builder.WithOrigins("https://metanit.com")
-        //    //.WithHeaders("metan", "salom");
         //});
+        
 
 
         builder.Services.AddRazorPages();
@@ -61,6 +59,14 @@ public class Program
         builder.Services.AddStartup();
         builder.Services.AddApplication();
         builder.Services.AddCookieAuthentication();
+
+        builder.Services.AddAuthentication().AddGoogle(options =>
+        {
+            options.ClientId = builder?.Configuration["web:client_id"];
+
+            options.ClientSecret = builder?.Configuration["web:client_secret"];
+        });
+
         builder.Services.AddAuthorization();
         builder.Services.AddLazyCache();
         builder.Services.AddRatelimiterParams();
@@ -87,7 +93,7 @@ public class Program
         //app.UseCors("metanit");
 
 
-        app.UseCors("pdpmetan");
+        app.UseCors("pdp");
 
 
         //app.UseCors(builder => builder
