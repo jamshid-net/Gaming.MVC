@@ -1,0 +1,101 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model List<IdentityRole>
+@inject RoleManager<IdentityRole> _rolemanager
+
+@{
+
+   
+  
+
+}
+   <h1>Roles</h1>
+
+
+   <form asp-action="Create">
+       <div class="d-flex justify-content-start">
+
+          <input type="text" class="form-control w-50 me-4" name="roleName" />
+          <button type="submit" class="btn btn-success">Add Role</button>
+       </div>
+   </form>
+  
+<table class="table text-white">
+    <thead>
+        <tr>
+          
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+           
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var role in Model)
+        {
+            <tr>
+                <th scope="row">@role.Id</th>
+                <td>@role.Name</td>
+                <td><a asp-action="Edit" asp-route-roleId="@role.Id" class="btn btn-warning">Edit</a></td>
+                <td><button data-bs-toggle="modal" data-bs-id="@role.Id" data-bs-target="#deleteRole" class="btn btn-danger">Delete</button></td>
+
+            </tr>
+        }
+        
+      
+    </tbody>
+</table>
+
+<!--DELETE ROLE-->
+<div class="modal fade" id="deleteRole" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+             <form asp-action="Delete">
+            <div class="modal-header">
+                
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+               
+                    <input type="text" readonly class="form-control" name="roleId" id="recipient-name" />
+               
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Delete it!</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--DELETE ROLE END-->
+
+
+
+
+
+@section Scripts {
+    <script>
+        var exampleModal = document.getElementById('deleteRole')
+        exampleModal.addEventListener('show.bs.modal', function (event) {
+            // Button that triggered the modal
+            var button = event.relatedTarget
+            // Extract info from data-bs-* attributes
+            var recipient = button.getAttribute('data-bs-id')
+            // If necessary, you could initiate an AJAX request here
+            // and then do the updating in a callback.
+            //
+            // Update the modal's content.
+            var modalTitle = exampleModal.querySelector('.modal-title')
+            var modalBodyInput = exampleModal.querySelector('.modal-body input')
+
+            modalBodyInput.value = recipient
+        })
+
+    </script>
+
+}

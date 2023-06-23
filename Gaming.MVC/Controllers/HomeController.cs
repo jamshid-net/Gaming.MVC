@@ -9,6 +9,7 @@ using System.Diagnostics;
 using X.PagedList;
 
 namespace Gaming.MVC.Controllers;
+
 [Authorize]
 public class HomeController : BaseController
 {
@@ -56,6 +57,8 @@ public class HomeController : BaseController
         return View(entity);
     }
 
+
+    [Authorize(Roles ="farfar")]
     public IActionResult Contact()
     {
         return View();
