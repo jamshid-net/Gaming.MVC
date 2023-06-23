@@ -1,0 +1,42 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using System.Security.Claims;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+
+}
+
+
+@inject RoleManager<IdentityRole> _manager;
+
+@model IdentityRole
+<!--Edit Role start-->
+ <h1>Claims</h1>
+@{
+    var claims =await _manager.GetClaimsAsync(Model);
+}
+
+
+<form asp-action="CreateClaim">
+    <div class="d-flex justify-content-start">
+        <input hidden name="roleId" value="@Model.Id"/>
+        <input type="text" class="form-control w-50 me-4" name="claimName"/>
+        <button type="submit" class="btn btn-success">Add Claim</button>
+    </div>
+</form>
+            <form asp-action="Edit">
+
+                    @foreach (var RoleClaim in claims)
+                    {
+                        <input class="form-check-input" type="checkbox" value="@RoleClaim.Value" id="flexCheckChecked" checked>
+                        <label class="form-check-label" for="flexCheckChecked">
+                            @RoleClaim.Value
+                        </label>
+                    }
+
+            </form>
+
+
+<!--Edit role end-->
+

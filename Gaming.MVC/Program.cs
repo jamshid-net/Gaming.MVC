@@ -12,8 +12,6 @@ namespace Gaming.MVC;
 public class Program
 {
 
-
-
     public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
@@ -60,6 +58,8 @@ public class Program
         builder.Services.AddApplication();
         builder.Services.AddCookieAuthentication();
 
+        
+
         builder.Services.AddAuthentication().AddGoogle(options =>
         {
             options.ClientId = builder?.Configuration["web:client_id"];
@@ -67,7 +67,28 @@ public class Program
             options.ClientSecret = builder?.Configuration["web:client_secret"];
         });
 
-        builder.Services.AddAuthorization();
+        builder.Services.AddAuthentication().AddFacebook(options =>
+        {
+            options.ClientId = builder?.Configuration["facebook:client_id"];
+
+            options.ClientSecret = builder?.Configuration["facebook:client_secret"];
+        });
+
+        builder.Services.AddAuthentication().AddGitHub(options =>
+        {
+            options.ClientId = builder?.Configuration["github:client_id"];
+
+            options.ClientSecret = builder?.Configuration["github:client_secret"];
+
+        });
+
+
+
+
+        builder.Services.AddAuthorization(options =>
+        {
+            options.AddPolicy("RoleBasedClaim", policy => policy.RequireClaim("Permission", "true"));
+        });
         builder.Services.AddLazyCache();
         builder.Services.AddRatelimiterParams();
         builder.Services.AddSingleton<TelegramBotService>();
