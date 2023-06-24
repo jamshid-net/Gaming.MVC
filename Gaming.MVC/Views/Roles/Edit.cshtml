@@ -1,56 +1,41 @@
 ﻿@using Microsoft.AspNetCore.Identity;
 @using System.Security.Claims;
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
 
-}
-
-
-@inject RoleManager<IdentityRole> _manager;
-
-@model IdentityRole
+@model UpdateClaimModelView
 <!--Edit Role start-->
 <h1>Claims</h1>
 @{
-    var claims = await _manager.GetClaimsAsync(Model);
+   
 }
 
 
 <form asp-action="CreateClaim">
     <div class="d-flex justify-content-start">
-        <input hidden name="roleId" value="@Model.Id" />
+        <input hidden name="roleId" value="@Model.RoleId" />
         <input type="text" class="form-control w-50 me-4" name="claimName" />
         <button type="submit" class="btn btn-success">Add Claim</button>
     </div>
 </form>
 
 <div>
-    <h1>Permissions for @Model.Name</h1>
+    <h1>Permissions for @Model.RoleName</h1>
 </div>
 <form asp-action="Edit" method="post">
-    @foreach (var RoleClaim in claims)
+    @for(int i = 0; i<Model.UpdateClaims.Count;i++)
     {
-       <div class="col-sm-3">
-           <input  type="text" name="ClaimName" value="@RoleClaim.Value" hidden/>
-            <label class="form-check-label" for="flexCheckChecked">
-                @RoleClaim.Value
-            </label>
-            <input class="form-check-input" title="true" type="checkbox" name="isActiveClaim" id="flexCheckChecked" checked>
-           
+
+        <div class="col-sm-3">
+            <div class="form-check form-switch">
+                <input class="form-check-input"  asp-for="UpdateClaims[i].isActiveClaim" checked="@Model.UpdateClaims[i].isActiveClaim" type="checkbox" id="flexSwitchCheckChecked">
+                <input  asp-for="UpdateClaims[i].ClaimName" value="@Model.UpdateClaims[i].ClaimName" hidden />
+                
+                <label class="form-check-label" for="flexSwitchCheckChecked">@Model.UpdateClaims[i].ClaimName</label>
+            </div>
         </div>
-
-
     }
-    <input type="text" name="RoleId" value="@Model.Id" hidden />
 
+        <input type="text" asp-for="RoleId" value="@Model.RoleId" hidden />
         <button type="submit" class="btn btn-success">Save</button>
 </form>
-
-
-
-
-
 
 <!--Edit role end-->
