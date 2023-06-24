@@ -1,0 +1,39 @@
+﻿@using Gaming.Domain.Identity;
+@using Microsoft.AspNetCore.Identity;
+
+@inject UserManager<User> _userManager;
+@model List<User>
+@{
+    
+
+}
+
+<table class="table text-light">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">User name</th>
+            <th scope="col">Roles</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <th scope="row">@user.Id</th>
+                <td>@user.UserName</td>
+                <td>
+                    <select class="form-select" aria-label="Default select example">
+                    
+                    @foreach (var item in await _userManager.GetRolesAsync(user))
+                    {
+                       <option value="1">@item</option>
+                    }
+                    </select>
+                </td>
+                <td></td>
+            </tr>
+        }
+    </tbody>
+</table>

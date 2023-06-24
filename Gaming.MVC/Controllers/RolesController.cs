@@ -3,13 +3,14 @@ using Gaming.MVC.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Gaming.MVC.Controllers;
 public class RolesController : Controller
 {
     private readonly RoleManager<IdentityRole> _roleManager;
 
-    
+   
 
     public RolesController(RoleManager<IdentityRole> roleManager)
     {
@@ -21,7 +22,8 @@ public class RolesController : Controller
     public async Task<IActionResult> Index()
     {
         var roles =await  _roleManager.Roles.ToListAsync();
-        
+     
+
         return View(roles);
 
     }
@@ -49,16 +51,61 @@ public class RolesController : Controller
         if (foundRole is null)
             throw new NotFoundException(nameof(IdentityRole), roleId);
 
-        return View (foundRole);    
+        var Claims = await _roleManager.GetClaimsAsync(foundRole);
+        UpdateClaimModelView updateClaimModelView = new UpdateClaimModelView();
+        updateClaimModelView.RoleId = foundRole.Id;
+        updateClaimModelView.RoleName = foundRole.Name;
+        foreach (var item in Claims)
+        {
+            updateClaimModelView
+                .UpdateClaims.Add(
+                new UpdateClaim()
+                {
+                    ClaimName = item.Value,
+                    isActiveClaim = true
+                }
+            );
+        }
+
+
+        return View(updateClaimModelView);    
         
     }
+
     [HttpPost]
-    public async Task<IActionResult> Edit([FromForm]UpdateClaimModelView[] Claim,string RoleId)
+    public async Task<IActionResult> Edit([FromForm]UpdateClaimModelView updateClaimModel)
     {
 
-        var aaa = Claim;
+        
+        var foundRole = await _roleManager.FindByIdAsync(updateClaimModel.RoleId);
+        if (foundRole is null)
+            throw new NotFoundException(nameof(IdentityRole), updateClaimModel.RoleId);
 
-        return View(Claim);   
+        var Claims = await _roleManager.GetClaimsAsync(foundRole);
+
+        if (updateClaimModel.UpdateClaims.Count == Claims.Count)
+        {
+            for (int i = 0; i < Claims.Count; i++)
+            {
+                if (Claims[i].Value == updateClaimModel.UpdateClaims[i].ClaimName)
+                {
+                    if (!updateClaimModel.UpdateClaims[i].isActiveClaim)
+                    {
+                       await _roleManager.RemoveClaimAsync(foundRole, Claims[i]);
+                        Claims.Remove(Claims[i]);
+                        updateClaimModel.UpdateClaims.Remove(updateClaimModel.UpdateClaims[i]);
+                        --i;
+                        
+                    }
+                }
+
+
+            }
+        }
+        await _roleManager.UpdateAsync(foundRole);
+        
+
+        return View(updateClaimModel);   
     }
 
 
@@ -68,10 +115,10 @@ public class RolesController : Controller
         if (foundRole is null)
             throw new NotFoundException(nameof(IdentityRole), roleId);
 
-       await  _roleManager.AddClaimAsync(foundRole, new System.Security.Claims.Claim("Permission",claimName));
+       await  _roleManager.AddClaimAsync(foundRole, new Claim(ClaimTypes.Role,claimName));
        await _roleManager.UpdateAsync(foundRole);
 
-        return View("Edit", foundRole);
+        return RedirectToAction("Edit",new{roleId=foundRole.Id});
 
     }
 
