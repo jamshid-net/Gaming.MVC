@@ -1,4 +1,5 @@
 ﻿using Gaming.Application.Common.Exceptions;
+using Gaming.MVC.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -48,10 +49,18 @@ public class RolesController : Controller
         if (foundRole is null)
             throw new NotFoundException(nameof(IdentityRole), roleId);
 
-        
-
         return View (foundRole);    
+        
     }
+    [HttpPost]
+    public async Task<IActionResult> Edit([FromForm]UpdateClaimModelView[] Claim,string RoleId)
+    {
+
+        var aaa = Claim;
+
+        return View(Claim);   
+    }
+
 
     public async Task<IActionResult> CreateClaim(string roleId, string claimName)
     {
