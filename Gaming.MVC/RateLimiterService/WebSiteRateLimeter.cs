@@ -11,8 +11,8 @@ public static class WebSiteRateLimeter
             options.AddFixedWindowLimiter("FixedLimiter", opt =>
             {
                 opt.Window = TimeSpan.FromSeconds(10);
-                opt.QueueLimit = 5;
-                opt.PermitLimit = 15;
+               
+                opt.PermitLimit = 10;
                 opt.AutoReplenishment = true;
                 opt.QueueProcessingOrder = System.Threading.RateLimiting.QueueProcessingOrder.OldestFirst;
 
