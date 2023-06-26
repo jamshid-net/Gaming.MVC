@@ -1,4 +1,5 @@
 ﻿using Gaming.Application.Common.Interfaces;
+using LazyCache;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,5 +17,10 @@ public class BaseController : Controller
 
     protected ICurrentUser _currentUser 
         => HttpContext.RequestServices.GetRequiredService<ICurrentUser>();
+
+    protected IAppCache _appCache 
+        => HttpContext.RequestServices.GetRequiredService<IAppCache>();
+
+     
 
 }

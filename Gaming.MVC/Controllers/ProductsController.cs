@@ -50,6 +50,7 @@ namespace Gaming.MVC.Controllers
 
         // GET: Products/Create
         [RemoveLazyCache]
+        [EnableRateLimiting("SlidingLimiter")]
         public IActionResult Create()
         {
             ViewData["CategoryName"] = new SelectList(_context.Categories, "CategoryName", "CategoryName");
@@ -61,6 +62,7 @@ namespace Gaming.MVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [EnableRateLimiting("SlidingLimiter")]
         public async Task<IActionResult> Create([FromForm] ProductView product)
         {
             if (ModelState.IsValid)
@@ -136,6 +138,7 @@ namespace Gaming.MVC.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [EnableRateLimiting("SlidingLimiter")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([FromForm] ProductView product,CancellationToken cancellationToken)
         {
@@ -202,6 +205,7 @@ namespace Gaming.MVC.Controllers
         }
 
         // GET: Products/Delete/5
+        [EnableRateLimiting("SlidingLimiter")]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null || _context.Products == null)
@@ -223,6 +227,7 @@ namespace Gaming.MVC.Controllers
         // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [EnableRateLimiting("SlidingLimiter")]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             if (_context.Products == null)
@@ -238,7 +243,7 @@ namespace Gaming.MVC.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        [EnableRateLimiting("SlidingLimiter")]
         private bool ProductExists(Guid id)
         {
           return (_context.Products?.Any(e => e.ProductId == id)).GetValueOrDefault();

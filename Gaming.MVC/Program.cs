@@ -82,7 +82,13 @@ public class Program
 
         });
 
+        //redis cache add service 
 
+        builder.Services.AddStackExchangeRedisCache(options =>
+        {
+            options.Configuration = builder.Configuration.GetConnectionString("RedisCache");
+
+        });
 
 
         builder.Services.AddAuthorization(options =>
